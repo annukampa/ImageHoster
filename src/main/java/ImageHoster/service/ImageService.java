@@ -28,10 +28,7 @@ public class ImageService {
     //The method does not store the image in the database
     public void uploadImage(Image image) {
         //Simply return from this method as this method does not currently store the image in the database
-        System.out.println(image);
         images.add(image);
-
-        System.out.println("all images here" + images);
     }
 
 }
