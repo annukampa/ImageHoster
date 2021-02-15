@@ -64,13 +64,20 @@ public class ImageController {
     //After you get the imageFile, convert it to Base64 format and store it as a string
     //After storing the image, this method directs to the logged in user homepage displaying all the images
     @RequestMapping(value = "/images/upload", method = RequestMethod.POST)
-    public String createImage(@RequestParam("file") MultipartFile file, Image newImage) throws IOException {
+    public String createImage(@RequestParam("file") MultipartFile file, Image newImage, HttpSession session) throws IOException {
 
         //Complete the method
         //Encode the imageFile to Base64 format and set it as the imageFile attribute of the newImage
         //Set the date attribute of newImage
         //Call the business logic to upload an image which currently does not store the image in the database
         //After uploading the image direct to the logged in user homepage displaying all the images
+        User user = (User) session.getAttribute("loggeduser");
+        String imageToUpload = convertUploadedFileToBase64(file);
+        newImage.setUser(user);
+        newImage.setImageFile(imageToUpload);
+        newImage.setDate(new Date());
+        imageService.uploadImage(newImage);
+        return "images";
     }
 
     //This method converts the image to Base64 format

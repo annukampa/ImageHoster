@@ -9,6 +9,7 @@ public class Image {
     private String imageFile;
     private String description;
     private Date date;
+    private User user;
 
     public Image(Integer id, String title, String imageFile, Date date) {
         this.id = id;
@@ -48,6 +49,9 @@ public class Image {
         return imageFile;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
     public void setImageFile(String imageFile) {
         this.imageFile = imageFile;
     }
