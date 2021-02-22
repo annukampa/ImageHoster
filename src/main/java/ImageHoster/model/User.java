@@ -1,7 +1,7 @@
 package ImageHoster.model;
 
 import javax.persistence.*;
-import javax.xml.stream.events.Comment;
+
 import java.util.ArrayList;
 import java.util.List;
 
