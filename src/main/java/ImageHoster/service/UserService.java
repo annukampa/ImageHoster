@@ -5,11 +5,20 @@ import ImageHoster.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    //Create required regex string for atleast one character number and special character
+    private static final String PASSWORD_PATTERN = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=]).{3,}";
+
+    //Create password pattern object to compile regex string
+    private static final Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 
     //Call the registerUser() method in the UserRepository class to persist the user record in the database
     public void registerUser(User newUser) {
@@ -32,4 +41,9 @@ public class UserService {
         }
     }
 
+    public boolean passwordStrengthCheck(User newUser) {
+        String userPassword = newUser.getPassword(); //Fetch user password
+        Matcher matcher = pattern.matcher(userPassword); //Match user password wit pattern string
+        return matcher.matches(); //return true or false
+    }
 }

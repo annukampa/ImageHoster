@@ -1,6 +1,7 @@
 package ImageHoster.model;
 
 import javax.persistence.*;
+import javax.xml.stream.events.Comment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,20 @@ public class User {
     //FetchType is LAZY
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Image> images = new ArrayList<>();
+
+    //user table reference to list of comment from comment table
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private List<Comment> comments = new ArrayList<>();
+
+
+    //Define getter and setter methods
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public Integer getId() {
         return id;

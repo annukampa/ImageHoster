@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -40,9 +41,36 @@ public class UserController {
     //This controller method is called when the request pattern is of type 'users/registration' and also the incoming request is of POST type
     //This method calls the business logic and after the user record is persisted in the database, directs to login page
     @RequestMapping(value = "users/registration", method = RequestMethod.POST)
-    public String registerUser(User user) {
-        userService.registerUser(user);
-        return "redirect:/users/login";
+    public String registerUser(User user, Model model) {
+        int initAlphabet = 0, initDigit = 0, initCharacter = 0;
+        String userPassword = user.getPassword();
+
+        for (int i = 0; i < userPassword.length(); i++) {
+            char ch = userPassword.charAt(i);
+
+            if ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')) {
+                initAlphabet++;
+            } else if (ch >= '0' && ch <= '9') {
+                initDigit++;
+            } else {
+                initCharacter++;
+            }
+
+        }
+
+        if (initAlphabet != 0 && initCharacter != 0 && initDigit != 0) {
+            userService.registerUser(user);
+            return "users/login";
+        } else {
+            String error = "Password must contain atleast 1 alphabet, 1 number & 1 special character";
+            User userObject = new User();
+            UserProfile userProfile = new UserProfile();
+            userObject.setProfile(userProfile);
+            model.addAttribute("User", userObject);
+            model.addAttribute("passwordTypeError", error);
+            return "users/registration";
+        }
+
     }
 
     //This controller method is called when the request pattern is of type 'users/login'
