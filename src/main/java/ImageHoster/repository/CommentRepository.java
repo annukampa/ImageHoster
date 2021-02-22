@@ -2,7 +2,7 @@ package ImageHoster.repository;
 
 import ImageHoster.model.Comment;
 import org.springframework.stereotype.Repository;
-import ImageHoster.model.Image;
+
 
 import javax.persistence.*;
 import java.util.List;

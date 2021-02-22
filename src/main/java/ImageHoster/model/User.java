@@ -47,6 +47,7 @@ public class User {
     private List<Comment> comments = new ArrayList<>();
 
 
+
     //Define getter and setter methods
     public List<Comment> getComments() {
         return comments;
